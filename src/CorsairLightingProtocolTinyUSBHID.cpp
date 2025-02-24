@@ -71,12 +71,10 @@ void CorsairLightingProtocolTinyUSBHID::setup(void) {
 
 	tudHid.setReportCallback(get_report_callback, set_report_callback);
 	tudHid.begin();
-
-	while (!TinyUSBDevice.mounted()) delay(1);
 }
 
 void CorsairLightingProtocolTinyUSBHID::update(void) {
-	if (newData) {
+	if (TinyUSBDevice.mounted() && newData) {
 		controller->handleCommand(command, this);
 		newData = 0;
 	}
